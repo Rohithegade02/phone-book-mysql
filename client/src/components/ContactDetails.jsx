@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { addUser, deleteUser, getDetails, updateUser } from '../api'
 import EditDeleteModal from './EditDeleteModal'
 import { UserPlusIcon } from '@heroicons/react/24/solid'
-import ContactDetailsModal from './ContactDetailsModal'
+import ContactDetailsModal from './AddModal'
+import { addContact, deleteContact, getDetails, updateContact } from '../api'
 
 const ContactDetails = () => {
   const [data, setData] = useState([])
@@ -49,7 +49,7 @@ const ContactDetails = () => {
 
   //add contact
   const handleAddUser = async formData => {
-    const response = await addUser(formData)
+    const response = await addContact(formData)
     if (response.ok) {
       setIsShowModal(false)
       getData()
@@ -59,7 +59,7 @@ const ContactDetails = () => {
   //delete contact
   const handleDelete = async id => {
     try {
-      const response = await deleteUser(id)
+      const response = await deleteContact(id)
 
       if (response.ok) {
         closeEditModal()
@@ -72,7 +72,7 @@ const ContactDetails = () => {
   //edit contact
   const handleEdit = async (id, changes) => {
     try {
-      await updateUser(id, changes)
+      await updateContact(id, changes)
       closeEditModal()
       getData()
     } catch (error) {
@@ -90,13 +90,8 @@ const ContactDetails = () => {
   })
 
   return (
-    <div style={{ margin: '5px', border: '1px solid #dee2e6' }}>
-      <div
-        style={{
-          margin: '5px',
-          borderRadius: '5px',
-        }}
-      >
+    <div className='lg:w-[40vw] m-[5px]  border-1 border-[#dee2e6]'>
+      <div className='m-[5px] rounded-md'>
         <div
           style={{
             background: 'black',
@@ -115,7 +110,8 @@ const ContactDetails = () => {
           <div style={{ display: 'flex' }}>
             <div>
               <input
-                style={{ borderRadius: '10px', padding: '5px', width: '40vw' }}
+                //={{ borderRadius: '10px', padding: '5px', width: '40vw' }}
+                className='rounded-md p-[5px] lg:w-[200px] w-[40vw] mr-2'
                 type='text'
                 value={search}
                 placeholder='Search..'
@@ -132,7 +128,7 @@ const ContactDetails = () => {
                 }}
                 onClick={() => setIsShowModal(true)}
               >
-                <UserPlusIcon style={{ height: '15px', width: '25px' }} />
+                <UserPlusIcon className='w-[25px] h-[25px] ' />
               </button>
             </div>
           </div>
@@ -147,59 +143,64 @@ const ContactDetails = () => {
           ) : null}
         </div>
       </div>
-      {data?.length === 0 ? (
-        <p>No contacts found Please add one contact.</p>
-      ) : (
-        filterBySearch?.map(contact => (
-          <div
-            onClick={() => openEditModal(contact)}
-            key={contact.id}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '20px',
-              borderBottom: '1px solid #dee2e6',
-              padding: '10px',
-            }}
-          >
-            <div>
-              <img
-                src={contact?.photo}
-                alt='Contact'
-                style={{
-                  height: '100px',
-                  width: '80px',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                }}
-              />
+      <div>
+        {data?.length === 0 ? (
+          <p>No contacts found Please add one contact.</p>
+        ) : (
+          filterBySearch?.map(contact => (
+            <div
+              onClick={() => openEditModal(contact)}
+              key={contact.id}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '20px',
+                borderBottom: '1px solid #dee2e6',
+                padding: '10px',
+              }}
+            >
+              <div>
+                <img
+                  src={
+                    contact?.photo ??
+                    'https://via.placeholder.com/100x100.png?text=Default+Image'
+                  }
+                  alt='Contact'
+                  style={{
+                    height: '100px',
+                    width: '80px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  }}
+                />
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontWeight: 800,
+                    color: 'gray',
+                    cursor: 'pointer',
+                    marginLeft: '30px',
+                  }}
+                  onClick={() => openEditModal(contact)}
+                >
+                  {contact?.nickname
+                    ? contact.nickname
+                    : `${contact?.first_name} ${contact?.last_name}`}
+                </p>
+              </div>
             </div>
-            <div>
-              <p
-                style={{
-                  fontWeight: 800,
-                  color: 'gray',
-                  cursor: 'pointer',
-                  marginLeft: '30px',
-                }}
-                onClick={() => openEditModal(contact)}
-              >
-                {contact?.nickname
-                  ? contact.nickname
-                  : `${contact?.first_name} ${contact?.last_name}`}
-              </p>
-            </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
 
-      {/* Edit Delete Contact Modal */}
-      <EditDeleteModal
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        selectedContact={selectedContact}
-        isEditModalOpen={isEditModalOpen}
-        closeEditModal={closeEditModal}
-      />
+        {/* Edit Delete Contact Modal */}
+        <EditDeleteModal
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          selectedContact={selectedContact}
+          isEditModalOpen={isEditModalOpen}
+          closeEditModal={closeEditModal}
+        />
+      </div>
     </div>
   )
 }

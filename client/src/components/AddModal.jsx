@@ -56,10 +56,7 @@ const AddModal = ({ onAdd, isShowModal, setIsShowModal }) => {
   }
 
   return (
-    <div
-      className='modal show'
-      style={{ display: 'block', position: 'initial', paddingLeft: '0px' }}
-    >
+    <div style={{ display: 'block', position: 'initial', paddingLeft: '0px' }}>
       <Modal
         show={isShowModal}
         onHide={() => setIsShowModal(false)}
@@ -77,19 +74,18 @@ const AddModal = ({ onAdd, isShowModal, setIsShowModal }) => {
             border: '1px solid gray',
           }}
         >
-          <Modal.Body style={{ margin: '5px' }}>
+          <Modal.Body className='flex flex-col items-center'>
             <div
               style={{
                 marginBottom: '10px',
                 textAlign: 'center',
-                position: 'relative',
               }}
             >
               <img
                 src={photoPreview}
                 alt='Selected'
+                className=' w-[80vw] lg:w-[20vw]'
                 style={{
-                  width: '70vw',
                   height: '100px',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                   filter:
@@ -102,11 +98,11 @@ const AddModal = ({ onAdd, isShowModal, setIsShowModal }) => {
                       : 'none',
                 }}
               />
-              <div style={{ position: 'absolute', bottom: '2%', left: '5%' }}>
+              <div>
                 <Button
                   variant='secondary'
+                  className='w-[80vw] lg:w-[20vw]'
                   style={{
-                    width: '70vw',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                   }}
                   onClick={() => document.getElementById('photoInput').click()}
@@ -233,22 +229,26 @@ const AddModal = ({ onAdd, isShowModal, setIsShowModal }) => {
                   background: '#fff',
                   color: 'gray',
                   border: 'none',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '20px',
                 }}
               >
                 <PhoneArrowDownLeftIcon
-                  style={{ height: '20px', width: '20px' }}
+                  style={{ height: '30px', width: '20px', marginLeft: '10px' }}
                 />{' '}
                 Phone Number
               </Button>
             )}
             {showPhoneButton &&
               phonenumbers?.map((number, index) => (
-                <Form.Group key={index} className='mb-3'>
+                <Form.Group key={index} className='mb-3 w-full'>
                   <Form.Label>Phone Number {index + 1}</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Phone Number'
                     value={number}
+                    className=''
                     onChange={e =>
                       handlePhoneNumberChange(index, e.target.value)
                     }

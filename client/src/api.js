@@ -2,7 +2,7 @@ const baseUrl = `http://localhost:4000`
 
 export const getDetails = async () => {
   try {
-    const response = await fetch(`${baseUrl}/user/get`)
+    const response = await fetch(`${baseUrl}/contact/get`)
     const result = await response.json()
     console.log(result)
     return result?.result
@@ -10,9 +10,9 @@ export const getDetails = async () => {
     console.log(err)
   }
 }
-export const addUser = async data => {
+export const addContact = async data => {
   try {
-    const response = await fetch(`${baseUrl}/user/add`, {
+    const response = await fetch(`${baseUrl}/contact/add`, {
       method: 'POST',
       body: data,
     })
@@ -21,9 +21,9 @@ export const addUser = async data => {
     console.log(err)
   }
 }
-export const deleteUser = async id => {
+export const deleteContact = async id => {
   try {
-    const response = await fetch(`${baseUrl}/user/${id}`, {
+    const response = await fetch(`${baseUrl}/contact/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
@@ -35,10 +35,10 @@ export const deleteUser = async id => {
   }
 }
 
-export const updateUser = async (id, data) => {
+export const updateContact = async (id, data) => {
   console.log(id, data)
   try {
-    await fetch(`${baseUrl}/user/${id}`, {
+    await fetch(`${baseUrl}/contact/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',

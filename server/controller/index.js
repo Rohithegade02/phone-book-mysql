@@ -1,7 +1,7 @@
 import db from "../config.js";
 
 //add contact controller
-export const addUser = async (req, res) => {
+export const addContact = async (req, res) => {
       console.log(req.body)
     const { firstname, lastname, nickname, address } = req.body;
       const photo = req.file ? req.file.filename : null;
@@ -57,7 +57,7 @@ export const addUser = async (req, res) => {
   
   
 //get details controller
-  export const getUser = async (req, res) => {
+  export const getContact = async (req, res) => {
     try {
       const query = `
       SELECT 
@@ -110,7 +110,7 @@ export const addUser = async (req, res) => {
 
 
 //delete contact controller
-export const deleteUser = async (req, res) => {
+export const deleteContact = async (req, res) => {
     const { id } = req.params;
     try {
         const query1 = `DELETE From contacts where id=?`
@@ -132,7 +132,7 @@ export const deleteUser = async (req, res) => {
 }
 
 //upadate contact controller
-export const updateUser = async (req, res) => {
+export const updateContact = async (req, res) => {
   const { id } = req.params; 
   const { firstname, lastname, nickname, address, phonenumbers } = req.body;
 

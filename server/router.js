@@ -1,5 +1,5 @@
 import express from "express";
-import {  addUser, deleteUser, getUser, updateUser } from "./controller/index.js";
+import {  addContact,deleteContact,  getContact,  updateContact } from "./controller/index.js";
 import multer from "multer";
 import path from "path";
 
@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
     }
   });
   const upload = multer({ storage: storage });
-router.post('/add',upload.single('photo'), addUser)
+router.post('/add',upload.single('photo'), addContact)
 // router.post('/addphone',addPhoneNumber)
- router.get('/get',getUser)
+ router.get('/get',getContact)
 // router.post('/',getDetails)
-router.delete('/:id', deleteUser)
-router.put('/:id',updateUser)
+router.delete('/:id', deleteContact)
+router.put('/:id',updateContact)
 
 export default router;

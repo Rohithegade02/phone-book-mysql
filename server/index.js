@@ -1,6 +1,6 @@
 import express from 'express';
 import Table from './models/index.js'
-import UserRoute from './router.js'
+import ContactRoute from './router.js'
 import cors from 'cors'
 import path from 'path';
 
@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/user',UserRoute)
+app.use('/contact',ContactRoute)
 app.get('/', (req, res) => {
     res.send('Hello Server')
 })
